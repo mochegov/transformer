@@ -1,0 +1,100 @@
+import nu.studer.gradle.jooq.JooqEdition
+
+buildscript {
+    dependencies {
+        classpath "org.postgresql:postgresql:${postgresVersion}"
+    }
+}
+
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version "${springBootVersion}"
+    id 'io.spring.dependency-management' version "${springDependencyManagementVersion}"
+    id 'org.flywaydb.flyway' version "${flywayPluginVersion}"
+    id 'nu.studer.jooq' version "${jooqPluginVersion}"
+}
+
+group = 'mochegov'
+version = '1.0.1'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation "org.springframework.boot:spring-boot-starter-jooq:${springBootVersion}"
+    implementation 'org.postgresql:postgresql'
+    implementation 'org.flywaydb:flyway-database-postgresql'
+
+    implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${springdocVersion}"
+
+    implementation "org.jooq:jooq:${jooqVersion}"
+    implementation "org.jooq:jooq-meta:${jooqVersion}"
+    implementation "org.jooq:jooq-codegen:${jooqVersion}"
+
+    runtimeOnly "org.postgresql:postgresql:${postgresVersion}"
+    jooqGenerator "org.postgresql:postgresql:${postgresVersion}"
+
+    compileOnly 'org.projectlombok:lombok'
+
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+flyway {
+    url = 'jdbc:postgresql://localhost:5432/postgres?currentSchema=transformer'
+    user = 'postgres'
+    password = 'postgres'
+    locations = ['filesystem:src/main/resources/db/migration']
+}
+
+jooq {
+    version = dependencyManagement.importedProperties['jooq.version']
+    edition = JooqEdition.OSS
+    configurations {
+        main {
+            generationTool {
+                logging = org.jooq.meta.jaxb.Logging.WARN
+                jdbc {
+                    driver = 'org.postgresql.Driver'
+                    url = flyway.url
+                    user = flyway.user
+                    password = flyway.password
+                }
+                generator {
+                    name = 'org.jooq.codegen.JavaGenerator'
+                    database {
+                        name = 'org.jooq.meta.postgres.PostgresDatabase'
+                        inputSchema = 'transformer'
+                        excludes = 'flyway_schema_history'
+                    }
+                    target {
+                        packageName = 'mochegov.transformer.jooq.domain'
+                    }
+                }
+            }
+        }
+    }
+}
+
+tasks.named('generateJooq') {
+    dependsOn 'flywayMigrate'
+
+    inputs.files(fileTree('src/main/resources/db/migration'))
+            .withPropertyName('migrations')
+            .withPathSensitivity(PathSensitivity.RELATIVE)
+
+    allInputsDeclared = true
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=transformer
+    driverClassName: org.postgresql.Driver
+    username: postgres
+    password: postgres
+
+transformation:
+  history:
+    enabled: true

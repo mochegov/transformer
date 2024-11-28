@@ -114,7 +114,6 @@ public interface MainControllerApi {
     )
     @GetMapping("/v1/transformation-history/{requestId}")
     ResponseEntity<ResponseDto> getTransformationHistoryByRequestId(
-        @Size(min = 36, max = 36)
         @Pattern(regexp = "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
         @Parameter(
             name = "requestId",

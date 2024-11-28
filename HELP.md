@@ -1,22 +1,23 @@
-# Getting Started
+# Demo project for transforming a list of strings
 
-### Reference Documentation
-For further reference, please consider the following sections:
+Each row has a list of possible transformations, which are performed in the specified order.
+It is necessary to save the transformation results in the database and retrieve them by ID.
 
-* [Official Gradle documentation](https://docs.gradle.org)
-* [Spring Boot Gradle Plugin Reference Guide](https://docs.spring.io/spring-boot/3.3.5/gradle-plugin)
-* [Create an OCI image](https://docs.spring.io/spring-boot/3.3.5/gradle-plugin/packaging-oci-image.html)
-* [Spring Web](https://docs.spring.io/spring-boot/3.3.5/reference/web/servlet.html)
+### Types of transformation:
+* FIND_AND_DELETE Finds substrings using a regular expression and removes them. One parameter is required: a regular expression.
+* FIND_AND_REPLACE Finds substrings using a regular expression and replaces them with another string. It takes two parameters: the regular expression and the substring to replace.
+* CYRILLIC Finds Cyrillic characters in a string and replaces them with the corresponding English equivalent. No parameters required.
 
-### Guides
-The following guides illustrate how to use some features concretely:
+Open API: http://localhost:8181/swagger-ui/index.html
 
-* [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/)
-* [Serving Web Content with Spring MVC](https://spring.io/guides/gs/serving-web-content/)
-* [Building REST services with Spring](https://spring.io/guides/tutorials/rest/)
+# Демонстрационный проект для трансформации списка строк
 
-### Additional Links
-These additional references should also help you:
+Каждая строка содержит список возможных преобразований, которые выполняются в указанном порядке.
+Необходимо сохранять результаты преобразования в базе данных и извлекать их по идентификатору.
 
-* [Gradle Build Scans – insights for your project's build](https://scans.gradle.com#gradle)
+### Типы трансформации:
+* FIND_AND_DELETE Находит подстроки с помощью регулярного выражения и удаляет их. Требуется один параметр: регулярное выражение.
+* FIND_AND_REPLACE Находит подстроки с помощью регулярного выражения и заменяет их другой строкой. Принимает два параметра: регулярное выражение и заменяемую подстроку.
+* CYRILLIC Находит кириллические символы в строке и заменяет их соответствующим английским эквивалентом. Параметры не требуются.
 
+Open API: http://localhost:8181/swagger-ui/index.html

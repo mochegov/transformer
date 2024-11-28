@@ -4,12 +4,13 @@ import static mochegov.transformer.errors.ErrorType.DATABASE_ERROR;
 import static mochegov.transformer.errors.ErrorType.HISTORY_NOT_FOUND;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import mochegov.transformer.db.model.TransformationHistory;
 import mochegov.transformer.db.model.TransformationHistoryDetail;
-import mochegov.transformer.db.repository.TransformationHistoryDetailJooqRepository;
-import mochegov.transformer.db.repository.TransformationHistoryJooqRepository;
+import mochegov.transformer.db.repository.TransformationHistoryDetailRepository;
+import mochegov.transformer.db.repository.TransformationHistoryRepository;
 import mochegov.transformer.dto.ResponseDto;
 import mochegov.transformer.dto.ResponseItemDto;
 import mochegov.transformer.errors.NotFoundException;
@@ -20,8 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Service
 public class TransformationHistoryService {
-    private final TransformationHistoryJooqRepository transformationHistoryRepository;
-    private final TransformationHistoryDetailJooqRepository transformationHistoryDetailRepository;
+    private final TransformationHistoryRepository transformationHistoryRepository;
+    private final TransformationHistoryDetailRepository transformationHistoryDetailRepository;
 
     @Transactional
     public void saveHistory(String requestId, ResponseDto responseDto) {
@@ -33,6 +34,10 @@ public class TransformationHistoryService {
         List<TransformationHistoryDetail> historyDetailList =
             buildTransformationHistoryDetailList(transformationHistory.getId(), responseDto);
         transformationHistoryDetailRepository.batchInsert(historyDetailList);
+    }
+
+    public Optional<UUID> getTransformationHistoryByRequestId(String requestId) {
+        return transformationHistoryRepository.findBy(requestId).map(TransformationHistory::getId);
     }
 
     public ResponseDto getHistoryByRequestId(String requestId) {

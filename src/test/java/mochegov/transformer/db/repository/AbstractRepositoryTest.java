@@ -9,8 +9,8 @@ import org.springframework.test.context.ActiveProfiles;
 @ActiveProfiles("test")
 @JooqTest
 @Import({
-    TransformerJooqRepository.class,
-    TransformationHistoryJooqRepository.class
+    TransformerRepository.class,
+    TransformationHistoryRepository.class
 })
 public class AbstractRepositoryTest {
     @Autowired

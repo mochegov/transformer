@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 class TransformationHistoryRepositoryTest extends AbstractRepositoryTest {
 
     @Autowired
-    private TransformationHistoryJooqRepository transformationHistoryRepository;
+    private TransformationHistoryRepository transformationHistoryRepository;
 
     @Test
     void add_history_ok() {

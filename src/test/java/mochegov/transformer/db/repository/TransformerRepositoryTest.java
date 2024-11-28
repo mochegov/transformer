@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 class TransformerRepositoryTest extends AbstractRepositoryTest {
 
     @Autowired
-    private TransformerJooqRepository transformerRepository;
+    private TransformerRepository transformerRepository;
 
     @Test
     void findBy_ok() {

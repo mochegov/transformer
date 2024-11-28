@@ -13,8 +13,8 @@ import org.jooq.TableRecord;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class TransformerJooqRepository extends BaseJooqRepository<Transformer> {
-    public TransformerJooqRepository(DSLContext dslContext) {
+public class TransformerRepository extends BaseJooqRepository<Transformer> {
+    public TransformerRepository(DSLContext dslContext) {
         super(dslContext);
     }
 

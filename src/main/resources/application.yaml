@@ -6,3 +6,37 @@ spring:
     name: transformer
   profiles:
     active: local
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+    enabled-by-default: true
+  endpoint:
+    health:
+      show-details: always
+      show-components: always
+      probes:
+        enabled: true
+  info:
+    git:
+      mode: full
+    java:
+      enabled: true
+  health:
+    readinessstate:
+      enabled: true
+    livenessstate:
+      enabled: true
+    diskspace:
+      enabled: false
+    distribution:
+      percentiles-histogram:
+        "[http.server.requests]": true
+      percentiles:
+        "[http.server.requests]": 0.5, 0.95, 0.99, 1
+      minimum-expected-value:
+        "[http.server.requests]": 1ms
+      maximum-expected-value:
+        "[http.server.requests]": 10s

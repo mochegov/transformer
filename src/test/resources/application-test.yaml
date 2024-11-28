@@ -17,10 +17,6 @@ spring:
   flyway:
     enabled: true
 
-logging:
-  level:
-    org.springframework.boot.docker.compose: DEBUG
-
 transformation:
   history:
     enabled: true

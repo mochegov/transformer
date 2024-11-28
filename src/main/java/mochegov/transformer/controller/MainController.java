@@ -1,5 +1,6 @@
 package mochegov.transformer.controller;
 
+import java.util.Optional;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +21,12 @@ public class MainController implements MainControllerApi {
 
     @Override
     public ResponseEntity<ResponseDto> transform(UUID requestId, RequestDto requestDto) {
+        Optional<UUID> uuidOptional = transformationHistoryService.getTransformationHistoryByRequestId(requestId.toString());
+        if (uuidOptional.isPresent()) {
+            var response = transformationHistoryService.getHistoryByRequestId(requestId.toString());
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        }
+
         var response = transformationService.transform(requestId, requestDto);
         return ResponseEntity.status(HttpStatus.OK)
             .header(CORRELATION_ID_HEADER, requestId.toString())
@@ -28,7 +35,7 @@ public class MainController implements MainControllerApi {
 
     @Override
     public ResponseEntity<ResponseDto> getTransformationHistoryByRequestId(String requestId) {
-       var response = transformationHistoryService.getHistoryByRequestId(requestId);
+        var response = transformationHistoryService.getHistoryByRequestId(requestId);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

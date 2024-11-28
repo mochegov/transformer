@@ -8,8 +8,8 @@ import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import mochegov.transformer.db.model.TransformationHistory;
 import mochegov.transformer.db.model.TransformationHistoryDetail;
-import mochegov.transformer.db.repository.TransformationHistoryDetailRepository;
-import mochegov.transformer.db.repository.TransformationHistoryRepository;
+import mochegov.transformer.db.repository.TransformationHistoryDetailJooqRepository;
+import mochegov.transformer.db.repository.TransformationHistoryJooqRepository;
 import mochegov.transformer.dto.ResponseDto;
 import mochegov.transformer.dto.ResponseItemDto;
 import mochegov.transformer.errors.NotFoundException;
@@ -20,8 +20,8 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Service
 public class TransformationHistoryService {
-    private final TransformationHistoryRepository transformationHistoryRepository;
-    private final TransformationHistoryDetailRepository transformationHistoryDetailRepository;
+    private final TransformationHistoryJooqRepository transformationHistoryRepository;
+    private final TransformationHistoryDetailJooqRepository transformationHistoryDetailRepository;
 
     @Transactional
     public void saveHistory(String requestId, ResponseDto responseDto) {

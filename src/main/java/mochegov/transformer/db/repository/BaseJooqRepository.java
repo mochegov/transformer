@@ -25,13 +25,13 @@ import org.springframework.stereotype.Repository;
  */
 @Slf4j
 @Repository
-public abstract class BaseRepository<M> {
+public abstract class BaseJooqRepository<M> {
     protected final DSLContext dslContext;
 
     protected Table<?> table;
     protected RecordMapper<Record, M> recordMapper;
 
-    protected BaseRepository(DSLContext dslContext) {
+    protected BaseJooqRepository(DSLContext dslContext) {
         this.dslContext = dslContext;
         this.table = getTable();
         this.recordMapper = getRecordMapper();

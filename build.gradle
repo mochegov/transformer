@@ -30,6 +30,9 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation "org.springframework.boot:spring-boot-starter-jooq:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-validation:${springBootVersion}"
+    implementation "jakarta.validation:jakarta.validation-api:${jakartaValidationApiVersion}"
+
     implementation 'org.postgresql:postgresql'
     implementation 'org.flywaydb:flyway-database-postgresql'
 
@@ -46,6 +49,8 @@ dependencies {
 
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.boot:spring-boot-docker-compose'
+
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 

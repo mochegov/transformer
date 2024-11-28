@@ -44,6 +44,7 @@ public class TransformationService {
             transformationHistoryService.saveHistory(requestId.toString(), responseDto);
         }
 
+        log.info("Request '%s' was successfully processed");
         return responseDto;
     }
 

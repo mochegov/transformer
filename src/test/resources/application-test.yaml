@@ -1,0 +1,26 @@
+spring:
+  docker:
+    compose:
+      lifecycle-management: start-and-stop
+      start:
+        command: up
+      stop:
+        command: down
+        timeout: 0
+      file: ./docker-compose-test.yaml
+
+  datasource:
+    url: jdbc:postgresql://localhost:15432/test_db?currentSchema=transformer
+    driverClassName: org.postgresql.Driver
+    username: postgres
+    password: postgres
+  flyway:
+    enabled: true
+
+logging:
+  level:
+    org.springframework.boot.docker.compose: DEBUG
+
+transformation:
+  history:
+    enabled: true

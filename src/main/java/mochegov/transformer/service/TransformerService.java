@@ -2,7 +2,7 @@ package mochegov.transformer.service;
 
 import lombok.RequiredArgsConstructor;
 import mochegov.transformer.db.model.Transformer;
-import mochegov.transformer.db.repository.TransformerRepository;
+import mochegov.transformer.db.repository.TransformerJooqRepository;
 import mochegov.transformer.errors.ErrorType;
 import mochegov.transformer.errors.NotFoundException;
 import org.springframework.stereotype.Service;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class TransformerService {
-    private final TransformerRepository transformerRepository;
+    private final TransformerJooqRepository transformerRepository;
 
     public Transformer findBy(Integer groupId, Integer transformerId) {
         return transformerRepository.findBy(groupId, transformerId)

@@ -13,8 +13,8 @@ import org.jooq.TableRecord;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class TransformationHistoryRepository extends BaseRepository<TransformationHistory> {
-    public TransformationHistoryRepository(DSLContext dslContext) {
+public class TransformationHistoryJooqRepository extends BaseJooqRepository<TransformationHistory> {
+    public TransformationHistoryJooqRepository(DSLContext dslContext) {
         super(dslContext);
     }
 
@@ -23,7 +23,7 @@ public class TransformationHistoryRepository extends BaseRepository<Transformati
         return rec -> TransformationHistory.builder()
             .id(rec.get(TRANSFORMATION_HISTORY.ID))
             .requestId(rec.get(TRANSFORMATION_HISTORY.REQUEST_ID))
-            .processedId(rec.get(TRANSFORMATION_HISTORY.PROCESSED_AT))
+            .processedAt(rec.get(TRANSFORMATION_HISTORY.PROCESSED_AT))
             .build();
     }
 

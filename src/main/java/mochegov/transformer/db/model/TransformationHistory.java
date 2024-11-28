@@ -12,5 +12,5 @@ import lombok.Setter;
 public class TransformationHistory {
     private UUID id;
     private String requestId;
-    private LocalDateTime processedId;
+    private LocalDateTime processedAt;
 }

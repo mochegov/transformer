@@ -17,6 +17,7 @@ import mochegov.transformer.errors.NotFoundException;
 import mochegov.transformer.errors.ServerException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -58,6 +59,15 @@ public class GlobalExceptionHandler {
             .sorted()
             .collect(Collectors.joining("; "));
 
+        ErrorMessage errorMessage = ErrorMessage.builder()
+            .errorCode(VALIDATION_ERRORS.code)
+            .errorDescription(ex.getMessage())
+            .build();
+        return new ResponseEntity<>(errorMessage, createCorrelationIdHeader(request), BAD_REQUEST);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ErrorMessage> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex, WebRequest request) {
         ErrorMessage errorMessage = ErrorMessage.builder()
             .errorCode(VALIDATION_ERRORS.code)
             .errorDescription(ex.getMessage())

@@ -17,8 +17,8 @@ import org.jooq.TableRecord;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class TransformationHistoryDetailRepository extends BaseRepository<TransformationHistoryDetail> {
-    public TransformationHistoryDetailRepository(DSLContext dslContext) {
+public class TransformationHistoryDetailJooqRepository extends BaseJooqRepository<TransformationHistoryDetail> {
+    public TransformationHistoryDetailJooqRepository(DSLContext dslContext) {
         super(dslContext);
     }
 

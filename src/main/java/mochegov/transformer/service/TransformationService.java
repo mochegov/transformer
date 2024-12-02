@@ -11,6 +11,7 @@ import mochegov.transformer.params.CyrillicTransformationParams;
 import mochegov.transformer.params.ElementForProcessing;
 import mochegov.transformer.params.FindAndDeleteTransformationParams;
 import mochegov.transformer.params.FindAndReplaceTransformationParams;
+import mochegov.transformer.params.GreekTransformationParams;
 import mochegov.transformer.params.TransformationParams;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ public class TransformationService {
     private final FindAndDeleteTransformation findAndDeleteTransformation;
     private final FindAndReplaceTransformation findAndReplaceTransformation;
     private final CyrillicTransformation cyrillicTransformation;
+    private final GreekTransformation greekTransformation;
 
     private final ValidateService validateService;
     private final TransformationHistoryService transformationHistoryService;
@@ -56,6 +58,7 @@ public class TransformationService {
                 case FIND_AND_DELETE -> findAndDeleteTransformation.perform(value, (FindAndDeleteTransformationParams) params);
                 case FIND_AND_REPLACE -> findAndReplaceTransformation.perform(value, (FindAndReplaceTransformationParams) params);
                 case CYRILLIC -> cyrillicTransformation.perform(value, (CyrillicTransformationParams) params);
+                case GREEK -> greekTransformation.perform(value, (GreekTransformationParams) params);
             };
         }
         return value;

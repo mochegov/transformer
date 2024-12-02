@@ -3,6 +3,7 @@ package mochegov.transformer.service;
 import static mochegov.transformer.enums.TransformerKind.CYRILLIC;
 import static mochegov.transformer.enums.TransformerKind.FIND_AND_DELETE;
 import static mochegov.transformer.enums.TransformerKind.FIND_AND_REPLACE;
+import static mochegov.transformer.enums.TransformerKind.GREEK;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,6 +20,7 @@ import mochegov.transformer.params.CyrillicTransformationParams;
 import mochegov.transformer.params.ElementForProcessing;
 import mochegov.transformer.params.FindAndDeleteTransformationParams;
 import mochegov.transformer.params.FindAndReplaceTransformationParams;
+import mochegov.transformer.params.GreekTransformationParams;
 import mochegov.transformer.params.TransformationParams;
 import org.springframework.stereotype.Service;
 
@@ -54,6 +56,7 @@ public class ValidateService {
             case FIND_AND_DELETE -> getFindAndDeleteTransformationParams(transformerDto.getParameters());
             case FIND_AND_REPLACE -> getFindAndReplaceTransformationParams(transformerDto.getParameters());
             case CYRILLIC -> getCyrillicTransformationParams(transformerDto.getParameters());
+            case GREEK -> getGreekTransformationParams(transformerDto.getParameters());
         };
     }
 
@@ -101,6 +104,17 @@ public class ValidateService {
 
         return CyrillicTransformationParams.builder()
             .kind(CYRILLIC)
+            .build();
+    }
+
+
+    private GreekTransformationParams getGreekTransformationParams(List<ParameterDto> params) {
+        if (!params.isEmpty()) {
+            throw new FieldValidationException("Greek transformation must not have any parameter", ErrorType.VALIDATION_ERRORS);
+        }
+
+        return GreekTransformationParams.builder()
+            .kind(GREEK)
             .build();
     }
 

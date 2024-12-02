@@ -18,7 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 @SpringBootTest(classes = {TransformationService.class, ValidateService.class,
-    FindAndDeleteTransformation.class, FindAndReplaceTransformation.class, CyrillicTransformation.class})
+    FindAndDeleteTransformation.class, FindAndReplaceTransformation.class, CyrillicTransformation.class, GreekTransformation.class})
 class TransformationServiceTest implements TestData {
 
     @Autowired
@@ -33,6 +33,8 @@ class TransformationServiceTest implements TestData {
     private FindAndReplaceTransformation findAndReplaceTransformation;
     @Autowired
     private CyrillicTransformation cyrillicTransformation;
+    @Autowired
+    private GreekTransformation greekTransformation;
 
     @MockBean
     private TransformerService transformerService;
@@ -55,6 +57,11 @@ class TransformationServiceTest implements TestData {
         .kind(TransformerKind.CYRILLIC)
         .build();
 
+    private final Transformer GreekTransformer = Transformer
+        .builder()
+        .kind(TransformerKind.GREEK)
+        .build();
+
     @Test
     void transform_ok() {
         final UUID requestId = UUID.randomUUID();
@@ -66,6 +73,7 @@ class TransformationServiceTest implements TestData {
                 case 1 -> FindAndDeleteTransformer;
                 case 2 -> FindAndReplaceTransformer;
                 case 3 -> CyrillicTransformer;
+                case 4 -> GreekTransformer;
                 default -> throw new IllegalStateException("Unexpected value: " + transformerId);
             };
         });
